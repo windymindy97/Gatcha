@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>레트로 뽑기판</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Goyang&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>레트로 뽑기판</h1>
+        <div class="prize-container">
+            <button id="drawButton">뽑기 시작!</button>
+            <div id="result" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('drawButton').addEventListener('click', function() {
+            fetch('/draw')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerText = `당첨된 상품: ${data.prize}`;
+                    alert(`축하합니다! ${data.prize}에 당첨되셨습니다.`);
+                })
+                .catch(err => console.error(err));
+        });
+    </script>
+</body>
+</html>
