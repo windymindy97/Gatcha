@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>레트로 추억의 뽑기판</title>
+    <style>
+        body {
+            font-family: 'YANGJIN', sans-serif;
+            background-color: #282c34;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .title {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #FF6347; /* 붉은 브라운 */
+        }
+
+        .button {
+            background-color: #FF6347;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #FF4500; /* 오렌지 */
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            color: white;
+            border-radius: 10px;
+        }
+
+        .popup .result {
+            font-size: 24px;
+            color: #00CED1; /* 진한 청록색 */
+        }
+
+        .popup .close {
+            margin-top: 20px;
+            background-color: #DC143C; /* 남색 */
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .popup .close:hover {
+            background-color: #8B0000;
+        }
+
+        .prize-box {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 50px;
+        }
+
+        .prize-box div {
+            background-color: #7FFFD4; /* 과일 청록색 */
+            padding: 20px;
+            border-radius: 10px;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        .prize-box div:nth-child(odd) {
+            background-color: #FF6347;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">레트로 뽑기판</div>
+        <button class="button" onclick="startDraw()">뽑기 시작</button>
+        <div class="prize-box">
+            <div>1등 - 10명</div>
+            <div>2등 - 30명</div>
+            <div>3등 - 40명</div>
+            <div>4등 - 80명</div>
+            <div>5등 - 120명</div>
+        </div>
+    </div>
+
+    <!-- 상품 결과 팝업 -->
+    <div class="popup" id="popup">
+        <div class="result" id="resultText">당첨 결과!</div>
+        <button class="close" onclick="closePopup()">닫기</button>
+    </div>
+
+    <script>
+        function startDraw() {
+            // 랜덤 상품 결과 결정
+            const prizes = [
+                { name: "1등", count: 10 },
+                { name: "2등", count: 30 },
+                { name: "3등", count: 40 },
+                { name: "4등", count: 80 },
+                { name: "5등", count: 120 },
+            ];
+
+            const totalTickets = 300;
+            const randomTicket = Math.floor(Math.random() * totalTickets);
+
+            let result;
+            if (randomTicket < 10) result = "1등";
+            else if (randomTicket < 40) result = "2등";
+            else if (randomTicket < 80) result = "3등";
+            else if (randomTicket < 160) result = "4등";
+            else result = "5등";
+
+            showPopup(result);
+        }
+
+        function showPopup(result) {
+            const popup = document.getElementById('popup');
+            const resultText = document.getElementById('resultText');
+            resultText.textContent = `당첨된 상품은 ${result}입니다!`;
+            popup.style.display = 'block';
+        }
+
+        function closePopup() {
+            const popup = document.getElementById('popup');
+            popup.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
